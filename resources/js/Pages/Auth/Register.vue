@@ -20,6 +20,12 @@ const submit = () => {
         onFinish: () => form.reset("password", "password_confirmation"),
     });
 };
+
+// defineProps({
+//     props: {
+//         errors: Object
+//     }
+// })
 </script>
 
 <template>

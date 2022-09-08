@@ -81,7 +81,7 @@
                                                         :href="
                                                             route(
                                                                 'communities.edit',
-                                                                community.slug
+                                                                community.id
                                                             )
                                                         "
                                                         class="text-indigo-600 hover:text-indigo-900 mr-3"
@@ -91,7 +91,7 @@
                                                         :href="
                                                             route(
                                                                 'communities.destroy',
-                                                                community.slug
+                                                                community.id
                                                             )
                                                         "
                                                         class="text-red-600 hover:text-red-900"

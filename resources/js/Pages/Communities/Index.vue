@@ -61,7 +61,7 @@
                                             class="divide-y divide-gray-200 bg-white"
                                         >
                                             <tr
-                                                v-for="community in communities"
+                                                v-for="community in communities.data"
                                                 :key="community.id"
                                             >
                                                 <td

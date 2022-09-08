@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
-use auth;
-use Inertia\Inertia;
-use App\Models\Community;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommunityStoreRequest;
+use App\Models\Community;
+use auth;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CommunityController extends Controller
 {
@@ -18,9 +18,13 @@ class CommunityController extends Controller
      */
     public function index()
     {
-        $communities = Community::all();
+        $communities = Community::where('user_id', auth()->id())->paginate(5)->through(fn ($community) => [
+            'id' => $community->id,
+            'name' => $community->name,
+            'slug' => $community->slug,
+        ]);
+        // $communities = Community::all();
         return Inertia::render('Communities/Index', compact('communities'));
-
     }
 
     /**
@@ -44,7 +48,7 @@ class CommunityController extends Controller
     {
         //
         Community::create($request->validated() + ['user_id' => auth()->id()]);
-        return to_route('communities.index');
+        return to_route('communities.index')->with('message', 'Saved Successfully');
     }
 
     /**
@@ -67,7 +71,7 @@ class CommunityController extends Controller
     public function edit(Community $community)
     {
         //
-        return Inertia::render('Communities/Edit',compact('community'));
+        return Inertia::render('Communities/Edit', compact('community'));
     }
 
     /**
@@ -90,8 +94,10 @@ class CommunityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Community $community)
     {
         //
+        $community->delete();
+        return back()->with('message', 'Deleted Successfully');
     }
 }

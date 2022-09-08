@@ -18,7 +18,10 @@ class CommunityController extends Controller
      */
     public function index()
     {
-        return 'ok';
+        $communities = Community::all();
+        return Inertia::render('Communities/Index', compact('communities'));
+        // return to_route('communities.create');
+
     }
 
     /**
@@ -42,7 +45,7 @@ class CommunityController extends Controller
     {
         //
         Community::create($request->validated() + ['user_id' => auth()->id()]);
-        return to_route('comunities.index');
+        return to_route('communities.index');
     }
 
     /**
